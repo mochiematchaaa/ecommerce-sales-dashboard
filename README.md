@@ -55,40 +55,69 @@ Main columns used:
 
 ---
 
+## Project Structure
+
+```txt id="dkb9jf"
+ecommerce-project/
+│
+├── README.md
+├── SALESDATA_FINALS.csv
+├── cleaned_amazon_sales.csv
+├── amazon_sales.py
+├── index.html
+├── style.css
+└── script.js
+```
+
+---
+
 ## How to Run the Project Locally
 
-### 1. Clone the Repository
+### 1. Download or Clone the Repository
 
-```bash
+```bash id="imjlwm"
 git clone https://github.com/mochiematchaaaa/ecommerce-sales-dashboard.git
 ```
 
 ### 2. Open the Project Folder
 
-```bash
+```bash id="jlwm8x"
 cd ecommerce-sales-dashboard
 ```
 
-### 3. Run the Dashboard
+### 3. Open the Project in VS Code
 
-Open `index.html` using Live Server in VS Code.
+Open the folder using Visual Studio Code.
+
+### 4. Run the Dashboard
+
+Install the Live Server extension in VS Code, then right-click `index.html` and select:
+
+```txt id="jlwm4n"
+Open with Live Server
+```
+
+### 5. Run the Python Cleaning Script (Optional)
+
+Open the terminal and run:
+
+```bash id="jlwm1u"
+python amazon_sales.py
+```
+
+The script will clean the dataset, normalize sales values, remove outliers, and export a cleaned CSV file.
 
 ---
 
 ## Python Data Cleaning
 
-Run the cleaning script using:
+The Python script performs:
 
-```bash
-python amazon_sales.py
-```
-
-The script:
-
-* handles missing values
-* normalizes sales values
-* removes outliers using IQR
-* exports cleaned dataset
+* missing value handling
+* date formatting
+* Min-Max normalization
+* IQR outlier filtering
+* cleaned CSV export
 
 ---
 
