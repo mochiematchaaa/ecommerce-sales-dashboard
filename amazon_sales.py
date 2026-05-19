@@ -64,7 +64,7 @@ df = df[
 ]
 
 # Export cleaned dataset
-df.to_csv("amazon_sales.csv", index=False)
+df.to_csv("cleaned_amazon_sales.csv", index=False)
 
 print("Cleaning completed successfully.")
 print(df.head())
