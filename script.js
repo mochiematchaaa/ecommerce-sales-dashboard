@@ -147,3 +147,113 @@ function renderDateChart(data) {
 }
 
 loadData();
+
+
+// Gemini API key from Google AI Studio
+const GEMINI_API_KEY = "AIzaSyD6T9ep-gMK8c9uElh60PuGGcgWkD3WKtg";
+
+// Add click event listener to AI insight button
+document
+  .getElementById("generateInsightBtn")
+  .addEventListener("click", generateAIInsight);
+
+// Function that generates AI-powered business insights
+async function generateAIInsight() {
+
+  // Get total number of orders
+  const totalOrders = allData.length;
+
+  // Calculate total revenue
+  const totalRevenue = allData.reduce((sum, item) => {
+    return sum + Number(item.amount || 0);
+  }, 0);
+
+  // Store category revenue totals
+  const categorySales = {};
+
+  // Compute total sales per category
+  allData.forEach(item => {
+
+    const category = item.category || "Unknown";
+
+    categorySales[category] =
+      (categorySales[category] || 0) +
+      Number(item.amount || 0);
+
+  });
+
+  // Identify top-performing category
+  const topCategory =
+    Object.entries(categorySales)
+      .sort((a, b) => b[1] - a[1])[0];
+
+  // Create AI prompt using real dataset values
+  const prompt = `
+Analyze this e-commerce sales dataset.
+
+Total Orders: ${totalOrders}
+Total Revenue: ${totalRevenue}
+Top Category: ${topCategory[0]}
+Top Category Revenue: ${topCategory[1]}
+
+Generate a short business insight and recommendation.
+`;
+
+  // Display loading message
+  document.getElementById("aiInsight").innerHTML =
+    "Generating AI insight...";
+
+  try {
+
+    // Send request to Gemini API
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: prompt }
+              ]
+            }
+          ]
+        })
+      }
+    );
+
+    // Convert API response to JSON
+    const data = await response.json();
+
+    // Extract AI-generated text
+    const text =
+      data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    // Handle missing AI response
+    if (!text) {
+
+      console.error("Full Gemini response:", data);
+
+      document.getElementById("aiInsight").innerHTML =
+        data.error?.message ||
+        data.promptFeedback?.blockReason ||
+        "No AI response received.";
+
+      return;
+    }
+
+    // Display generated insight
+    document.getElementById("aiInsight").innerHTML = text;
+
+  } catch (error) {
+
+    // Display error if request fails
+    console.error(error);
+
+    document.getElementById("aiInsight").innerHTML =
+      "Error generating AI insight.";
+  }
+}
