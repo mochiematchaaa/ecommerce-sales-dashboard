@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce Sales Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>E-Commerce Sales Analytics Dashboard</h1>
+    <p class="subtitle">Amazon Sales Data with Supabase Cloud Analytics</p>
+
+    <div class="filter-box">
+      <label>Filter by Category:</label>
+      <select id="categoryFilter">
+        <option value="All">All Categories</option>
+      </select>
+    </div>
+
+    <div class="kpi-container">
+      <div class="card">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
+      </div>
+      <div class="card">
+        <h3>Total Revenue</h3>
+        <p id="totalRevenue">0</p>
+      </div>
+      <div class="card">
+        <h3>Average Sales</h3>
+        <p id="averageSales">0</p>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h2>Sales by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>Order Status Distribution</h2>
+        <canvas id="statusChart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>Sales Trend by Date</h2>
+        <canvas id="dateChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
